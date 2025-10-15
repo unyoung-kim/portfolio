@@ -1,13 +1,8 @@
 "use client";
 import { timeline } from "@/constants/timeline";
 import React from "react";
-import { Paragraph } from "./Paragraph";
 import { Heading } from "./Heading";
-import {
-  IconCheck,
-  IconCheckbox,
-  IconCircleCheckFilled,
-} from "@tabler/icons-react";
+import { Paragraph } from "./Paragraph";
 
 export const WorkHistory = () => {
   return (
@@ -28,6 +23,9 @@ export const WorkHistory = () => {
             <Paragraph className="text-base md:text-base lg:text-base font-semibold">
               {item.title}
             </Paragraph>
+            <Paragraph className="text-sm md:text-sm lg:text-sm text-neutral-500 mb-2">
+              {item.location}
+            </Paragraph>
             <Paragraph className="text-sm md:text-sm lg:text-sm mb-4">
               {item.description}
             </Paragraph>
@@ -44,8 +42,8 @@ export const WorkHistory = () => {
 
 const Step = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex space-x-1 items-start my-2">
-      <IconCircleCheckFilled className="h-3 w-4 mt-1 text-neutral-300" />
+    <div className="flex space-x-2 items-start my-2">
+      <div className="w-2 h-2 bg-neutral-300 rounded-full mt-2 flex-shrink-0" />
       <Paragraph className="text-sm md:text-sm lg:text-sm">
         {children}
       </Paragraph>
