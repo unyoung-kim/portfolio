@@ -1,11 +1,9 @@
+import { Blogs } from "@/components/Blogs";
 import { Container } from "@/components/Container";
-import { Heading } from "@/components/Heading";
 import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
-import { Products } from "@/components/Products";
-import { getAllBlogs } from "../../../lib/getAllBlogs";
-import { Blogs } from "@/components/Blogs";
 import { Metadata } from "next";
+import { getAllBlogs } from "../../../lib/getAllBlogs";
 
 export const metadata: Metadata = {
   title: "Blogs | John Doe",
@@ -20,7 +18,9 @@ export default async function Blog() {
   return (
     <Container>
       <span className="text-4xl">📝</span>
-      <Heading className="font-black pb-4">I write about technology</Heading>
+      <h1 className="font-sans font-bold text-2xl md:text-3xl lg:text-4xl text-primary pb-4">
+        I write about technology
+      </h1>
       <Paragraph className="pb-10">
         Ever since <Highlight> I was a kid</Highlight>, I&apos;ve been
         fascinated by technology.

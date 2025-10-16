@@ -64,7 +64,7 @@ export const Navigation = ({
           href={link.href}
           onClick={() => isMobile() && setOpen(false)}
           className={twMerge(
-            "text-secondary hover:text-primary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm",
+            "font-sans text-secondary hover:text-primary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm",
             isActive(link.href) && "bg-white shadow-lg text-primary"
           )}
         >
@@ -86,7 +86,7 @@ export const Navigation = ({
           key={link.href}
           href={link.href}
           className={twMerge(
-            "text-secondary hover:text-primary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm"
+            "font-sans text-secondary hover:text-primary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm"
           )}
         >
           <link.icon
@@ -112,7 +112,7 @@ const SidebarHeader = () => {
         width="40"
         className="object-cover object-top rounded-full flex-shrink-0"
       />
-      <div className="flex text-sm flex-col">
+      <div className="flex text-sm flex-col font-sans">
         <p className="font-bold text-primary">Wes Kim</p>
         <p className="font-light text-secondary">(Unyoung)</p>
       </div>

@@ -1,11 +1,8 @@
 "use client";
 import { Product } from "@/types/products";
-import Image, { StaticImageData } from "next/image";
-import React, { useState } from "react";
-import { Heading } from "./Heading";
-import { Paragraph } from "./Paragraph";
-import Link from "next/link";
 import { motion } from "framer-motion";
+import Image, { StaticImageData } from "next/image";
+import { useState } from "react";
 
 export const SingleProduct = ({ product }: { product: Product }) => {
   const [activeImage, setActiveImage] = useState<StaticImageData | string>(
@@ -54,7 +51,10 @@ export const SingleProduct = ({ product }: { product: Product }) => {
         ))}
       </div>
       <div className="flex lg:flex-row justify-between items-center flex-col mt-20">
-        <Heading className="font-black mb-2 pb-1"> {product.title}</Heading>
+        <h1 className="font-sans font-bold text-2xl md:text-3xl lg:text-4xl text-primary mb-2 pb-1">
+          {" "}
+          {product.title}
+        </h1>
         <div className="flex space-x-2 md:mb-1 mt-2 md:mt-0">
           {product.stack?.map((stack: string) => (
             <span
@@ -67,7 +67,9 @@ export const SingleProduct = ({ product }: { product: Product }) => {
         </div>
       </div>
       <div>
-        <Paragraph className="max-w-xl mt-4">{product.description}</Paragraph>
+        <p className="font-sans text-base text-secondary max-w-xl mt-4">
+          {product.description}
+        </p>
       </div>
       <div className="prose prose-sm md:prose-base max-w-none text-neutral-600">
         {product?.content}

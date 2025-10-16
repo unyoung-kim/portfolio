@@ -4,12 +4,23 @@ import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
 import { Products } from "@/components/Products";
 import { TechStack } from "@/components/TechStack";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <Container>
-      <span className="text-4xl">🤖</span>
-      <Heading className="font-black">Wes Kim (Unyoung)</Heading>
+      <div className="flex items-center space-x-6 mb-6">
+        <Image
+          src="/images/profile.png"
+          alt="Wes Kim (Unyoung)"
+          width={100}
+          height={100}
+          className="rounded-full object-cover object-top flex-shrink-0"
+        />
+        <div>
+          <Heading className="font-black">Wes Kim (Unyoung)</Heading>
+        </div>
+      </div>
       <Paragraph className="max-w-xl mt-4">
         I&apos;m a prospective graduate student working on{" "}
         <Highlight>
@@ -32,7 +43,7 @@ export default function Home() {
       </Paragraph>
       <Heading
         as="h2"
-        className="font-black text-lg md:text-lg lg:text-lg mt-20 mb-4"
+        className="font-black text-lg md:text-lg lg:text-xl mt-20 mb-4"
       >
         What I&apos;ve been personally working on
       </Heading>

@@ -456,7 +456,7 @@ export const products = [
   },
   {
     href: "",
-    title: "GymPT",
+    title: "On-Device Pose Detection for Workout Tracking",
     description:
       "On-Device Pose Detection for Workout Tracking. 1st place at UChicago Class Hackathon out of 60 people.",
     thumbnail: gymptMain,

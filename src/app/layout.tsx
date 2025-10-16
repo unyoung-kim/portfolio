@@ -1,13 +1,20 @@
 import { Footer } from "@/components/Footer";
 import { Sidebar } from "@/components/Sidebar";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Crimson_Text, Source_Serif_4 } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import "./globals.css";
 
-const inter = Inter({
+const sourceSerif4 = Source_Serif_4({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["200", "300", "400", "600", "700"],
+  variable: "--font-source-serif-4",
+});
+
+const crimsonText = Crimson_Text({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-crimson-text",
 });
 
 export const metadata: Metadata = {
@@ -25,8 +32,9 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={twMerge(
-          inter.className,
-          "flex antialiased h-screen overflow-hidden bg-gray-100"
+          sourceSerif4.variable,
+          crimsonText.variable,
+          "font-serif flex antialiased h-screen overflow-hidden bg-gray-100"
         )}
       >
         <Sidebar />

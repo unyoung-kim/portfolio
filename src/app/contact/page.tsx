@@ -13,7 +13,7 @@ export default function Projects() {
   return (
     <Container>
       <span className="text-4xl">✉️</span>
-      <Heading className="font-black mb-2">Contact Me</Heading>
+      <Heading className="font-black mb-3">Contact Me</Heading>
       <Paragraph className="mb-10 max-w-xl">
         Reach out to me via email at <strong>uykim0005@gmail.com</strong> or
         connect with me on{" "}

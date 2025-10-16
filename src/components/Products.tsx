@@ -4,8 +4,6 @@ import { Product } from "@/types/products";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Heading } from "./Heading";
-import { Paragraph } from "./Paragraph";
 
 export const Products = () => {
   return (
@@ -38,15 +36,12 @@ export const Products = () => {
               />
               <div className="flex flex-col justify-between">
                 <div>
-                  <Heading
-                    as="h4"
-                    className="font-black text-lg md:text-lg lg:text-lg "
-                  >
+                  <h4 className="font-sans font-bold text-lg md:text-lg lg:text-lg text-primary">
                     {product.title}
-                  </Heading>
-                  <Paragraph className="text-sm md:text-sm lg:text-sm mt-2 max-w-xl">
+                  </h4>
+                  <p className="font-sans text-sm md:text-sm lg:text-sm mt-2 max-w-xl text-secondary">
                     {product.description}
-                  </Paragraph>
+                  </p>
                 </div>
                 <div className="flex space-x-2 md:mb-1 mt-2 md:mt-0">
                   {product.stack?.map((stack: string) => (
