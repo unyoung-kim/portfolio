@@ -21,12 +21,15 @@ export default function Home() {
           <Heading className="font-black">Wes Kim (Unyoung)</Heading>
         </div>
       </div>
-      <Paragraph className="max-w-xl mt-4">
+      {/* <Paragraph className="max-w-xl mt-4">
         I&apos;m a prospective graduate student working on{" "}
         <Highlight>
           synthetic data generation for robotics / physical AI.
         </Highlight>{" "}
         I previously studied Computer Science at UChicago.
+      </Paragraph> */}
+      <Paragraph className="max-w-xl mt-4">
+        Studied Computer Science at University of Chicago.
       </Paragraph>
 
       <Paragraph className="max-w-xl mt-4">
