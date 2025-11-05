@@ -7,9 +7,9 @@ const nextConfig = {
   images: {
     domains: ["images.unsplash.com", "res.cloudinary.com"],
   },
-  experimental: {
-    mdxRs: true,
-  },
+  // experimental: {
+  //   mdxRs: true,
+  // },
 };
 
 const withMDX = nextMDX({
