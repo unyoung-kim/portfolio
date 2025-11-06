@@ -10,6 +10,15 @@ const nextConfig = {
   // experimental: {
   //   mdxRs: true,
   // },
+  webpack: (config, { dev }) => {
+    if (dev) {
+      // Fix webpack cache issues in development
+      config.cache = {
+        type: "filesystem",
+      };
+    }
+    return config;
+  },
 };
 
 const withMDX = nextMDX({
