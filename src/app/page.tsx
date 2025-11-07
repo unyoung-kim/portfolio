@@ -49,8 +49,8 @@ export default function Home() {
         <Highlight>
           <strong>Goal:</strong>
         </Highlight>{" "}
-        Accelerate the Robotic Deployment by Synthetic Data Generation and
-        High-Fidelity Simulation.
+        Accelerate the Robotic Deployment by Simulation and Scalable Data
+        Collection Methods.
       </Paragraph>
 
       <Paragraph className="max-w-xl mt-4">
