@@ -1,0 +1,116 @@
+import { BlogLayout } from "@/components/BlogLayout";
+
+export const meta = {
+  date: "2025-10-18",
+  title: "Structural limitation of video models to be world simulators",
+  description:
+    "Exploring why current video generation models struggle with physical accuracy and long-term persistence, and what it would take to build truly reliable world simulators.",
+  image: "/images/blog/ai-bunnies.jpg",
+  tags: ["World Foundation Models", "Video Models"],
+};
+
+export default (props) => <BlogLayout meta={meta} {...props} />;
+
+You probably have seen this image before. It is a screenshot from the viral AI made video of bunnies jumping on a trampoline. It is probably one of the first AI videos that went viral due to its deceptive realism.
+
+It is genuinely impressive how far and quickly video models have made progress. I would scroll through social media, and I now have to pay very close attention to videos to distinguish AI made videos from real ones. The seeming accuracy of these models on everyday clips is honestly a little unsettling. A dog running through a park, a drone shot over a city at sunset, a person casually talking to the camera. All of it now looks “real enough” that my brain does not automatically flag it as synthetic.
+
+For these reasons, video models have been disussed as a path to world simulators - a model that is essential to understand and simulate the real world - which is critical to robotics and embodied intelligence. However, in this article, I'd like to discuss the current limitation of video models as being considered world models and where they architecturally fall short.
+
+1. They are not truly physically accurate. (Visually plausible but physically inaccurate)
+
+2. They struggle with persistence, especially over long videos
+
+Both of these come from how the models are built, not just from a lack of scale or data.
+
+---
+
+## 1. Limits in physical accuracy: "looks real" is not the same as "is real"
+
+Today's top video models like Veo, Sora, and Kling can generate motion that feels realistic at a glance. Objects move, cameras pan, things collide, and it all looks pretty convincing.
+
+Under the hood though, these models are not really modeling a 3D world with actual physics. They work with 2D video latents over time, not a full 3D scene representation such as 3D Gaussian splats or a proper 3D simulator. That means they can only approximate things like parallax and occlusion instead of guaranteeing a consistent 3D structure when scenes get complex.
+
+A physically grounded system would keep an internal world state and update it step by step. You would have something like
+
+`s_{t+1} = f(s_t, a_t)`
+
+where `s_t` holds information such as object positions, velocities, forces, gravity, friction, and so on. In that setup, motion is a consequence of the model updating the state according to physical rules.
+
+Current video models do not do that. They do not maintain an explicit state that says "object X is here, moving this fast, under these forces." Instead, they learn visual patterns. They operate in a latent space where the objective is to produce frames that look right, not to simulate how the real world would evolve.
+
+Because of that, they are really good at generating motion that falls inside the space of "this looks real enough" based on training data. For common motions and short clips, that works surprisingly well. But when motion becomes unusual or long range, or when many objects interact in complex ways, the lack of true dynamics shows up. You start getting physically impossible or inconsistent behavior that still looks okay if you do not inspect it carefully.
+
+Strong spatio temporal attention helps a bit. The denoiser is usually a large transformer that can see a long stretch of frames at once. That lets it do things like keep track of a red car across zooms or camera cuts, because the entire clip lives in one joint latent tensor. This gives the impression of "understanding" motion and identity.
+
+Even then, it is still pattern matching. The model is not integrating equations of motion. It is filling in pixels in a way that matches the training distribution. The training loss is usually some form of reconstruction in latent space. As long as the frames look right to the loss, it does not care if the gravity is off or if energy is not conserved. So the model behaves like a visual generator, not a physics engine.
+
+Another angle on this is determinism. Physics is deterministic under the same initial conditions. If you drop a ball in exactly the same way, it should follow the same trajectory every time. Video models are stochastic by design. Even if you fix the prompt, the seed, and all conditions that you can control at the interface level, the underlying sampling process is probabilistic in latent space. You can get similar looking results, but there is no guarantee that "same setup, same conditions" yields the same exact trajectory. This is fine for creative content, but it falls short of being a true physical simulator.
+
+---
+
+## 2. The persistence problem
+
+Short clips are enough for memes, ads, or quick visual ideas. For many real use cases though, you want minutes or even hours of coherent video. That is where current models run into serious problems.
+
+There are two related challenges:
+
+1. Generating long videos at all
+
+2. Maintaining a consistent world state and story across those long durations
+
+### 2.1 Attention cost and why long context is hard
+
+The core issue is the cost of self attention.
+
+Roughly speaking, the sequence length looks like:
+
+> (spatial tokens per frame) × (number of frames) + (audio tokens) + (text tokens)
+
+Self attention scales as `O(N^2)` in sequence length. If you want high resolution like 1080p and a decent frame rate, you either need to:
+
+- Aggressively downsample in the autoencoder so you have fewer tokens per frame
+
+- Or limit the number of frames you process at once
+
+In practice, models do both. That is why most current systems work on relatively short clips, often just a few seconds per sample. You can try to fix this by scaling the model or using more efficient attention variants, but there is still a fundamental tension between resolution, frame rate, and temporal length. The more you want of one, the more you have to compromise on the others.
+
+### 2.2 Fixed windows and why stitching breaks long term logic
+
+Even if you have tools that "stitch" clips together, like Flow, there is a deeper issue with persistence.
+
+A common approach is something like this:
+
+- Generate clip A
+
+- Take the last frame of clip A
+
+- Use it as a condition or starting point for clip B
+
+- Repeat to get a longer sequence
+
+This can produce visually smooth transitions between clips. The problem is that the model only ever sees a fixed temporal window, usually on the order of 4 to 8 seconds. Its temporal receptive field is bounded by that window. The model does not know about the entire stitched video. It only optimizes clip by clip.
+
+That means the global scene state is not truly carried forward. Only the pixels are. The model does not have a memory of events that happened minutes ago. For example, if a character drops a key on a specific tile five minutes earlier, and you later ask for a shot where they return to pick it up, the model has no grounded internal notion of where that key should be. You can try to enforce it with clever prompting and conditioning, but you are essentially hoping that the model will hallucinate a consistent outcome.
+
+As a result, today's video models are good at what you could call "micro stories." They can handle short scenes with internal consistency, nice motion, and coherent visual logic. When you stretch that into full movies, long procedures, or something like an hour long surgery, the lack of persistent state and memory becomes a real blocker.
+
+---
+
+## Wrapping up
+
+In short, current video models are impressive visual storytellers, but they are not yet reliable world simulators.
+
+They:
+
+- Work in 2.5D latent space, not a true 3D physical world
+
+- Learn visual statistics instead of explicit dynamics
+
+- Are stochastic generators, not deterministic physical systems
+
+- Struggle with long videos because attention cost explodes with sequence length
+
+- Operate in fixed temporal windows, so they lack true long term persistence
+
+These tradeoffs are completely fine for a lot of creative and entertainment use cases. But if the goal is to move toward systems that understand and simulate the physical world over long horizons, the architecture will likely need to change. That probably means bringing in more explicit 3D representations, structured world state, and models that update that state over time, not just models that produce frames that look right.
