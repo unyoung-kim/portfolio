@@ -9,6 +9,7 @@ import anomalyDetectionSide1 from "public/images/project/anomaly-detection-side1
 import egocentricVideoGenerationMain from "public/images/project/egocentric-video-gen-main.png";
 import egocentricVideoGenSide1 from "public/images/project/egocentric-video-gen-side1.png";
 import gymptMain from "public/images/project/gympt-main.png";
+import motionDetectionMain from "public/images/project/meta-quest.jpg";
 
 export const products = [
   {
@@ -454,6 +455,85 @@ export const products = [
       </div>
     ),
   },
+  {
+    href: "https://github.com/unyoung-kim/Activity-detection",
+    title:
+      "Motion Detection in VR using Machine Learning & Real Time-Inference",
+    description: "",
+    thumbnail: motionDetectionMain,
+    images: [motionDetectionMain],
+    stack: ["VR", "Machine Learning", "Real Time-Inference"],
+    slug: "motion-detection-in-vr",
+    content: (
+      <div>
+        <h3 className="font-bold text-lg mt-4 mb-2">Project Overview</h3>
+        <p>
+          This project explores machine learning for activity detection using VR
+          tracking data. Collected sensor data from a Meta Quest 2 headset and
+          controllers, and developed classification algorithms to detect six
+          different activities (standing, sitting, jogging, arms chopping, arms
+          stretching, and twisting).
+        </p>
+
+        <h3 className="font-bold text-lg mt-6 mb-2">
+          Technical Implementation
+        </h3>
+        <p>
+          We worked with a dataset of VR tracking data containing 36 sensor
+          fields from the headset and left/right controllers, including
+          velocity, angular velocity, position, and rotation measurements across
+          x, y, and z dimensions. The dataset consisted of approximately 696
+          labeled samples (116 per activity) and 174 test samples.
+        </p>
+        <p>We implemented two classification approaches:</p>
+        <ul className="list-disc pl-6 space-y-1 mb-4">
+          <li>
+            <strong>Statistical Threshold Classifier:</strong> A rule-based
+            algorithm using means and variances of significant sensor attributes
+            to classify activities without machine learning models
+          </li>
+          <li>
+            <strong>Shallow Learning Classifier:</strong> A machine learning
+            approach using non-deep learning models (e.g., SVM, decision tree,
+            random forest) with carefully engineered features extracted from the
+            sensor data
+          </li>
+        </ul>
+        <p>
+          We extended the shallow learning classifier to support{" "}
+          <strong>continuous activity detection</strong> using sliding window
+          evaluation, enabling real-time detection of activity transitions as
+          users switch between different movements.
+        </p>
+        <p>
+          Finally, we implemented real-time inference in{" "}
+          <strong>Unity/C#</strong> using the statistical threshold approach,
+          processing sensor data from a 3-second sliding window to detect and
+          display the current activity in real-time within the VR environment.
+        </p>
+
+        <h3 className="font-bold text-lg mt-6 mb-2">Results</h3>
+        <p>
+          The project involved comprehensive evaluation on validation sets,
+          measuring precision and accuracy for each activity type, as well as
+          latency performance. Both classification methods were tested on
+          continuous sensing scenarios where activities transitioned within
+          single data traces, demonstrating the system&apos;s ability to handle
+          real-world usage patterns where users naturally switch between
+          activities.
+        </p>
+        <p>
+          The real-time Unity implementation successfully detected activities
+          with a maximum lag time of 3 seconds, providing immediate visual
+          feedback to users in the VR environment. This project provided
+          hands-on experience with machine learning for mobile sensing systems,
+          feature engineering, model evaluation, and real-time inference
+          optimization.
+        </p>
+      </div>
+    ),
+  },
+
   {
     href: "",
     title: "On-Device Pose Detection for Workout Tracking",
